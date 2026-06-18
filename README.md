@@ -386,33 +386,84 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 
 📧 Contato
 
-    Autor: Seu Nome
+    Autor: wilson Archimedes da Silva
 
-    Email: seu.email@exemplo.com
-
-    GitHub: github.com/seu-usuario
-
-    LinkedIn: linkedin.com/in/seu-usuario
-
+    Email: wil.kimel@gmail.com
+    GitHub: github.com/wil-ckaew
+    LinkedIn: linkedin.com/in/wilson-archimedes-da-silva-90968948/
 ⭐ Suporte
 
-Se você gostou deste projeto, considere dar uma estrela no GitHub!
+📚 O que Aprendi
 
-Wallet Live - Gerenciando seu futuro financeiro com tecnologia e elegância. 🚀
-🏆 Status do Projeto
+Durante este desafio, tive a oportunidade de:
 
-https://img.shields.io/badge/Rust-1.70+-orange
-https://img.shields.io/badge/License-MIT-blue
-https://img.shields.io/badge/Build-Passing-brightgreen
-https://img.shields.io/badge/Dependencies-Up%2520to%2520date-green
-https://img.shields.io/badge/PRs-Welcome-brightgreen
-📊 Roadmap
+    Domínio de Rust: Aprimorei meu conhecimento em Rust, especialmente com:
 
-    Adicionar mais criptomoedas
+        Tokio para programação assíncrona
+
+        SQLx para operações seguras com banco de dados
+
+        Axum para construção de APIs robustas
+
+        Askama para templates HTML
+
+    Arquitetura de Software: Estruturei uma aplicação Fullstack com:
+
+        Separação clara de responsabilidades
+
+        Organização de código modular
+
+        Princípios SOLID aplicados
+
+    Segurança: Implementei medidas de segurança importantes:
+
+        JWT para autenticação stateless
+
+        Hash de senhas com Argon2
+
+        Proteção contra SQL Injection
+
+        Cookies seguros
+
+    UX/UI: Desenvolvi uma interface moderna com:
+
+        Glass Morphism
+
+        Tema escuro
+
+        Animações suaves
+
+        Gráficos interativos
+
+    DevOps: Utilizei:
+
+        Docker para containerização
+
+        SQLx CLI para migrações
+
+        Git para versionamento
+
+🏆 Resultado
+
+O projeto final é uma aplicação funcional, segura e com uma interface moderna que permite:
+
+    ✅ Autenticação de usuários
+
+    ✅ Gerenciamento completo de ativos
+
+    ✅ Visualização de portfólio
+
+    ✅ Dashboard com gráficos
+
+    ✅ Histórico de compras
+
+    ✅ Design responsivo
+
+🚀 Próximos Passos
 
     Integrar com APIs de mercado (Binance, CoinGecko)
 
-    Alertas de preço
+    Adicionar alertas de preço
 
     Exportar relatórios (PDF/CSV)
 
@@ -422,35 +473,15 @@ https://img.shields.io/badge/PRs-Welcome-brightgreen
 
     Análise de portfólio avançada
 
-    Suporte a múltiplas moedas
+📝 Licença
 
-text
+Este projeto está sob a licença MIT.
+🙏 Agradecimentos
 
+    DIO (Digital Innovation One) pelo desafio
 
-## Como usar:
+    Comunidade Rust pelo suporte
 
-1. **Crie o arquivo**:
-   ```bash
-   touch README.md
+    Todos os contribuidores do projeto
 
-    Cole o conteúdo acima no arquivo
-
-    Crie a pasta de screenshots:
-    bash
-
-    mkdir -p screenshots
-
-    Adicione as imagens:
-
-        screenshots/login.png
-
-        screenshots/dashboard.png
-
-        screenshots/assets.png
-
-    Visualize localmente:
-    bash
-
-    # Instale o glow para visualizar markdown no terminal
-    cargo install glow
-    glow README.md
+Desafio concluído com sucesso! 
