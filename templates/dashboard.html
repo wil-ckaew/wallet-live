@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Wallet Live</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
+        .glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .glass-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+        .stat-value { font-size: 1.5rem; font-weight: 700; }
+        .profit { color: #34d399; }
+        .loss { color: #f87171; }
+        .chart-container { background: rgba(255,255,255,0.03); border-radius: 1rem; padding: 0.5rem; min-height: 250px; }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-primary {
+            background: rgba(34, 211, 238, 0.15);
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            color: #22d3ee;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: rgba(34, 211, 238, 0.25);
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.15);
+        }
+        .btn-success {
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            color: #34d399;
+            transition: all 0.3s ease;
+        }
+        .btn-success:hover {
+            background: rgba(52, 211, 153, 0.25);
+            box-shadow: 0 0 25px rgba(52, 211, 153, 0.15);
+        }
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #f87171;
+            transition: all 0.3s ease;
+        }
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.25);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <div class="container mx-auto px-4 py-6 max-w-6xl fade-in">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">📊 Dashboard</h1>
+                <p class="text-gray-400 text-sm">Welcome back, {{ user.username() }}</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <a href="/assets" class="btn-primary px-4 py-2 rounded-xl text-sm font-medium inline-flex items-center gap-1">💰 Assets</a>
+                <a href="/assets/new" class="btn-success px-4 py-2 rounded-xl text-sm font-medium inline-flex items-center gap-1">➕ New</a>
+                <a href="/logout" class="btn-danger px-4 py-2 rounded-xl text-sm font-medium inline-flex items-center gap-1">🚪</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="glass-card rounded-xl p-4 text-center">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Total Value</p>
+                <p class="stat-value text-cyan-400">${{ total_value }}</p>
+            </div>
+            <div class="glass-card rounded-xl p-4 text-center">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Total Invested</p>
+                <p class="stat-value text-white">${{ total_invested }}</p>
+            </div>
+            <div class="glass-card rounded-xl p-4 text-center">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Profit/Loss</p>
+                <p class="stat-value {% if profit_loss >= 0.0 %}profit{% else %}loss{% endif %}">
+                    {% if profit_loss >= 0.0 %}+{% endif %}${{ profit_loss }}
+                </p>
+            </div>
+            <div class="glass-card rounded-xl p-4 text-center">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Assets</p>
+                <p class="stat-value text-white">{{ asset_count }}</p>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="glass-card rounded-xl p-4 mb-6">
+            <h2 class="text-lg font-semibold mb-2">📈 Portfolio Performance</h2>
+            <div class="chart-container" id="performance-chart">
+                {{ chart_html|safe }}
+            </div>
+        </div>
+
+        <!-- Top Performers -->
+        <div class="glass-card rounded-xl p-4">
+            <h2 class="text-lg font-semibold mb-3">🏆 Top Performers</h2>
+            {% if top_performers.is_empty() %}
+            <p class="text-gray-400 text-center py-4 text-sm">No assets to display</p>
+            {% else %}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {% for asset in top_performers %}
+                <a href="/dashboard/asset/{{ asset.id }}" class="glass-card rounded-xl p-3 hover:scale-105 transition-transform duration-300">
+                    <h3 class="font-semibold text-white text-sm">{{ asset.name }}</h3>
+                    <p class="text-xs text-gray-400">Qty: {{ asset.quantity_owned }}</p>
+                    <p class="text-sm font-semibold {% if asset.value_delta >= 0.0 %}profit{% else %}loss{% endif %}">
+                        {% if asset.value_delta >= 0.0 %}+{% endif %}${{ asset.value_delta }}
+                    </p>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
