@@ -45,6 +45,7 @@ impl App {
             .merge(routes::api::router())
             .merge(routes::frontend::router())
             .merge(routes::dashboard::router())
+            .merge(routes::chat::router())
             .with_state(state);
 
         info!("Starting service on port 3000");

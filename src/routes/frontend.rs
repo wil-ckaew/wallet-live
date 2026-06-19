@@ -89,13 +89,26 @@ async fn index(user: Option<User>) -> Result<impl IntoResponse, AppError> {
                     <style>
                         body {{ font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }}
                         .glass-card {{ background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }}
+                        .glass-card:hover {{ background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); transition: all 0.3s ease; }}
+                        .btn-cyan {{ background: rgba(34,211,238,0.15); border: 1px solid rgba(34,211,238,0.25); color: #22d3ee; transition: all 0.3s ease; }}
+                        .btn-cyan:hover {{ background: rgba(34,211,238,0.25); box-shadow: 0 0 25px rgba(34,211,238,0.15); transform: translateY(-2px); }}
+                        .btn-emerald {{ background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.25); color: #34d399; transition: all 0.3s ease; }}
+                        .btn-emerald:hover {{ background: rgba(52,211,153,0.25); box-shadow: 0 0 25px rgba(52,211,153,0.15); transform: translateY(-2px); }}
+                        .btn-purple {{ background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.25); color: #a855f7; transition: all 0.3s ease; }}
+                        .btn-purple:hover {{ background: rgba(168,85,247,0.25); box-shadow: 0 0 25px rgba(168,85,247,0.15); transform: translateY(-2px); }}
+                        .btn-rose {{ background: rgba(244,63,94,0.15); border: 1px solid rgba(244,63,94,0.25); color: #fb7185; transition: all 0.3s ease; }}
+                        .btn-rose:hover {{ background: rgba(244,63,94,0.25); box-shadow: 0 0 25px rgba(244,63,94,0.15); transform: translateY(-2px); }}
+                        .btn-red {{ background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.25); color: #f87171; transition: all 0.3s ease; }}
+                        .btn-red:hover {{ background: rgba(239,68,68,0.25); box-shadow: 0 0 25px rgba(239,68,68,0.15); transform: translateY(-2px); }}
+                        .fade-in {{ animation: fadeIn 0.5s ease-out; }}
+                        @keyframes fadeIn {{ from {{ opacity: 0; transform: translateY(20px); }} to {{ opacity: 1; transform: translateY(0); }} }}
                     </style>
                 </head>
                 <body class="min-h-screen flex items-center justify-center p-4">
-                    <div class="glass-card rounded-2xl p-8 shadow-2xl max-w-md w-full">
+                    <div class="glass-card rounded-2xl p-8 shadow-2xl max-w-md w-full fade-in">
                         <div class="text-center">
-                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl shadow-lg mb-4">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl shadow-lg mb-4">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
@@ -104,16 +117,19 @@ async fn index(user: Option<User>) -> Result<impl IntoResponse, AppError> {
                         </div>
                         
                         <div class="space-y-3">
-                            <a href="/assets" class="block w-full text-center bg-cyan-500/20 border border-cyan-400/30 text-cyan-400 px-4 py-2.5 rounded-xl hover:bg-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all duration-300">
+                            <a href="/assets" class="block w-full text-center btn-cyan px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300">
                                 📊 View Assets
                             </a>
-                            <a href="/assets/new" class="block w-full text-center bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 px-4 py-2.5 rounded-xl hover:bg-emerald-500/30 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)] transition-all duration-300">
+                            <a href="/assets/new" class="block w-full text-center btn-emerald px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300">
                                 ➕ New Asset
                             </a>
-                            <a href="/dashboard" class="block w-full text-center bg-purple-500/20 border border-purple-400/30 text-purple-400 px-4 py-2.5 rounded-xl hover:bg-purple-500/30 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all duration-300">
+                            <a href="/dashboard" class="block w-full text-center btn-purple px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300">
                                 📈 Dashboard
                             </a>
-                            <a href="/logout" class="block w-full text-center bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-2.5 rounded-xl hover:bg-red-500/30 transition-all duration-300">
+                            <a href="/chat" class="block w-full text-center btn-rose px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300">
+                                🤖 AI Chat
+                            </a>
+                            <a href="/logout" class="block w-full text-center btn-red px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300">
                                 🚪 Logout
                             </a>
                         </div>
